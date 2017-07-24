@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="PID">????</Property>
+        <Property name="DEFAULT_PATTERN">%highlight{[%-5level]} %style{[%date{ISO8601}] [%t] [%class{1}->%method:%line]}{Magenta} %msg %mdc%n</Property>
+        <Property name="MICRO_SERVICE_HOME">.</Property>
+        <Property name="LOG_FILE">${sys:MICRO_SERVICE_HOME}/logs/stdout.log</Property>
+    </Properties>
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="${DEFAULT_PATTERN}" />
+        </Console>
+        <File name="FILE" fileName="${sys:LOG_FILE}">
+            <PatternLayout pattern="${DEFAULT_PATTERN}" />
+        </File>
+        <Async name="ASYNC" includeLocation="true">
+            <AppenderRef ref="FILE" />
+            <AppenderRef ref="CONSOLE" />
+        </Async>
+    </Appenders>
+
+    <Loggers>
+        <Root level="WARN">
+            <AppenderRef ref="ASYNC" />
+        </Root>
+        <Logger name="com.ifood" level="DEBUG"/>
+        <Logger name="org.springframework" level="WARN"/>
+        <Logger name="com.amazonaws" level="WARN"/>
+        <Logger name="org.hibernate" level="WARN"/>
+    </Loggers>
+</Configuration>
